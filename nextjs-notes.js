@@ -2,6 +2,7 @@
 NextJS
     fullstack framework built on React
         frontend + backend in same project
+        SSR components are good for SEO
     file based routing 
         routes configure via filesystem
         no extra configuration is needed 
@@ -13,14 +14,21 @@ NextJS
             creates new page 
         layout.js
             creates layout that wraps siblings and nested pages 
-            project neeeds atleast 1 root layout.js file 
+            project neeeds atleast 1 root layout.js file
         not-found.js 
             Fallback page for not found errors 
+            applicable for all sibling and nested components 
+            notFound() can be called to invoke not found page 
+            it is from next/navigation
         error.js 
             Fallback page for other errors 
+            applicable for all sibling and nested components 
         loading.js 
             Fallback page shown while sibling or nested pages or layouts
             are fetching data 
+            applicable for all sibling and nested components 
+            React Suspense 
+                can be used for defining loading for specific component
         route.js 
             allow to create an API route 
             page which returns data like JSON instead of JSX  
@@ -43,7 +51,34 @@ NextJS
         params prop
             all dynamic params are stored in key/value pair 
             
-            
+    Optimizations
+        <Image />
+            automatically optimizes images 
+            from next/Image
+    Server components 
+        components that rendered only on server 
+        can use async for components
+        great for SEO
+        default component type 
+    Client components
+        components pre-rendered on server but then also 
+        potentially on client
+        add "use client"; directive at top 
+        try to use this only on deepest component
+        so we can leverage most out of SSR components
+        great for client side interactivity
+    Server Actions
+        "use server"; in function
+        turns function into a server action
+        must add async 
+        usecase: form action 
+        nextjs internally creates a request and send to the nextjs server 
+    Hooks 
+        usePathname() Hook 
+            give current url path 
+    
+    
+
         
 
 
