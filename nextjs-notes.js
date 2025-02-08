@@ -35,6 +35,9 @@ NextJS
     metadata 
         special exported variable for polutating metadata in page 
         like title, description etc
+        for dynamic pages 
+            generateMetaData() is used
+            gets same props as page 
     Routing Approaches
         App Router 
             new recommended Approach
@@ -68,16 +71,38 @@ NextJS
         so we can leverage most out of SSR components
         great for client side interactivity
     Server Actions
-        "use server"; in function
-        turns function into a server action
+        "use server"; in function 
+            turns function into a server action
+            can't be defined inside client components
+        "use server"; in file top
+            makes all code inside as server actions
+            can be imported in client component
         must add async 
+        
         usecase: form action 
         nextjs internally creates a request and send to the nextjs server 
     Hooks 
         usePathname() Hook 
             give current url path 
-    
-    
+    NextJS in Production builds 
+        caching
+            nextjs does aggressive caching 
+            pre-renders all non-dynamic pages 
+        public folder 
+            there won't be any public folder in prod build 
+            all resources in it will be moved to .next folder at build time 
+            public folder must contain only static resources
+    Trigger Cache Revalidations
+        removes caches related to certain page
+        revalidatePath()
+            takes path, "page"/"layout" 
+            page
+                default
+                to revalidate the page of path given
+                nested paths won't be revalidated
+            layout 
+                to revalidate page and all nested pages 
+        
 
         
 
