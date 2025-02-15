@@ -23,6 +23,7 @@ NextJS
         error.js 
             Fallback page for other errors 
             applicable for all sibling and nested components 
+            must be client component
         loading.js 
             Fallback page shown while sibling or nested pages or layouts
             are fetching data 
@@ -45,15 +46,55 @@ NextJS
             old Approach
             supports modern NextJS & React features 
             fullstack applications 
-    route 
-        create folder and page.js file in it 
-        ex: app/home/page.js 
-    Dynamic route 
-        create folder with square brackets [] and page.js 
-        ex: app/[username]/page.js
-        params prop
-            all dynamic params are stored in key/value pair 
-            
+    Routing
+        route 
+            create folder and page.js file in it 
+            ex: app/home/page.js 
+        Dynamic route 
+            create folder with square brackets [] and page.js 
+            ex: app/[username]/page.js
+            params prop
+                all dynamic params are stored in key/value pair 
+        Parallel Routes 
+            multiple route pages shown in same page at same time
+            layout.js file on parent path 
+                have props for each parallel route 
+                instead of single children prop 
+                ex: {latest, trending}
+            parallel route folder name starts with @
+            nested routes for parallel routes
+                default.js file should be added in all parallel routes 
+                to show it as Fallback if nested route for that parallel route 
+                is not defined 
+                you have just default.js without page.js if parallel route 
+                does not have a sub routes 
+            ex: app/home/@latest app/home/@trending   
+            Catch-All Routes 
+                /meals/[[...something]]
+                page inside this folder is visible for meals nested routes 
+                can't have page.js in /meals/
+                param.something is array 
+        Intercepting Route 
+            load a new route within the current layout while masking the browser
+            URL, useful for advanced routing patterns such as modals.
+            ex: (.)image  -> . for current folder, image is path u want to intercept
+            usage: load image modal route without changing url in browser 
+        Navigating Programatically
+            useRouter() Hook 
+                back()
+                push() etc
+        Route Groups 
+            can setup dedicated layout for routes inside it 
+            changes root layout also
+            ex: (content)
+        Route Handlers 
+            route.js reserved file name 
+            used to create APIs 
+            ex: app/api/route.js
+        Middleware 
+            reserved name outside app folder: middleware.js
+            used to create middleware for incoming requests including for assets
+            can filter the requests
     Optimizations
         <Image />
             automatically optimizes images 
@@ -102,10 +143,4 @@ NextJS
                 nested paths won't be revalidated
             layout 
                 to revalidate page and all nested pages 
-        
-
-        
-
-
-
 */
