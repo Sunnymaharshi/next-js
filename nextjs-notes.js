@@ -32,13 +32,25 @@ NextJS
                 can be used for defining loading for specific component
         route.js 
             allow to create an API route 
-            page which returns data like JSON instead of JSX  
-    metadata 
-        special exported variable for polutating metadata in page 
-        like title, description etc
-        for dynamic pages 
-            generateMetaData() is used
-            gets same props as page 
+            page which returns data like JSON instead of JSX 
+    reserved variables  
+        metadata 
+            for polutating metadata in page 
+            like title, description etc
+            for dynamic pages 
+                generateMetaData() is used
+                gets same props as page 
+        revalidate 
+            number of seconds should cache data is used 
+            after that it will be revalidated 
+        dynamic
+            force-dynamic 
+                won't store data in Data Cache 
+                disables Full Route Cache also
+            force-static 
+                always stores data in Data Cache 
+             
+
     Routing Approaches
         App Router 
             new recommended Approach
@@ -95,13 +107,9 @@ NextJS
             reserved name outside app folder: middleware.js
             used to create middleware for incoming requests including for assets
             can filter the requests
-    Optimizations
-        <Image />
-            automatically optimizes images 
-            from next/Image
     Server components 
         components that rendered only on server 
-        can use async for components
+        can use async for components for fetching data directly in server
         great for SEO
         default component type 
     Client components
@@ -112,27 +120,68 @@ NextJS
         so we can leverage most out of SSR components
         great for client side interactivity
     Server Actions
+        react feature but unlocked by NextJS
+        must be async functions
         "use server"; in function 
             turns function into a server action
-            can't be defined inside client components
         "use server"; in file top
             makes all code inside as server actions
-            can be imported in client component
-        must add async 
-        
-        usecase: form action 
+            can be imported in client component                
+        usecase: data mutation form action, takes a function and passes form data object
         nextjs internally creates a request and send to the nextjs server 
+    server-only package 
+        import it in a module/file
+        to make a module to run only on server 
+        if any of server-only module imported to client components
+        it will throw an error 
     Hooks 
         usePathname() Hook 
             give current url path 
+        useActionState() Hook - react
+            to get the status of form submit
+        useOptimistic() Hook - react 
+            lets u optimistically update the UI 
     NextJS in Production builds 
         caching
-            nextjs does aggressive caching 
+            nextjs does aggressive caching in production
             pre-renders all non-dynamic pages 
         public folder 
             there won't be any public folder in prod build 
             all resources in it will be moved to .next folder at build time 
             public folder must contain only static resources
+    Aggressive Caching 
+        Request Memoization
+            in Server
+            data: Return values of functions
+            stores data requests with same configuration
+            Re-use data in a React Component tree
+            revalidation
+                revalidatePath()
+            caching custom data source 
+                cache() from react
+        Data Cache 
+            in Server
+            data: Data
+            Store data across user requests and deployments
+            persists until it is revalidated 
+            revalidation 
+                passing object with cache: 'no-store' to fetch()
+                passing object with next: {revalidate:3} to fetch()
+                revalidatePath()
+                revalidate, dynamic variables
+            caching custom data source 
+                cache() from next/cache
+        Full Route Cache
+            in Server
+            data: HTML and RSC payload
+            Reduce rendering cost and improve performance
+            persists until it is revalidated
+        Router Cache
+            in Client 
+            data: RSC payload
+            Reduce server requests on navigation
+            User session or time-based
+
     Trigger Cache Revalidations
         removes caches related to certain page
         revalidatePath()
@@ -143,4 +192,27 @@ NextJS
                 nested paths won't be revalidated
             layout 
                 to revalidate page and all nested pages 
+        revalidateTag()
+            takes tag
+            can give tags to requests by passing { next: {tags: ["a","b"]}}
+            to fetch functions 
+    NextJS App Optimizations
+        <Image />
+            automatically optimizes images 
+            size optimization 
+            prevents layout shifts 
+            loaded only when they enter viewport 
+            Asset flexibility
+                ondemand image resizing even for images stored on remote server 
+            priority attribute
+                removes lazyloading attribute to image 
+                adds fetchpriority="high"
+            fill property
+                for loading unknown images 
+                must config hostname for remote images in next.config.mjs 
+        SEO Optmization (metadata)
+            static metadata
+                metadata variable in page or layout file
+            dynamic metadata
+                async generateMetaData() 
 */
