@@ -141,6 +141,10 @@ NextJS
             to get the status of form submit
         useOptimistic() Hook - react 
             lets u optimistically update the UI 
+        useActionState - react
+            allows you to update state based on the result of a form action.
+            returns a state that can be passed to action in form
+            server action must receive prevState and then formData in 2nd argument
     NextJS in Production builds 
         caching
             nextjs does aggressive caching in production
