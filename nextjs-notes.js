@@ -219,4 +219,59 @@ NextJS
                 metadata variable in page or layout file
             dynamic metadata
                 async generateMetaData() 
+    NextJS Deployment 
+        standard build 
+            regular build 
+            requires nodejs server
+            cmd: next build 
+        full static build 
+            produces static app 
+            No nodejs server required
+            cmd: next export
+
+
+    Pages Router (old way & stable)
+        reserved file names 
+            index.js 
+                component for root path for a route 
+                ex: pages/product/index.js => /product
+            404.js 
+                not found page 
+        Routing
+            /pages folder is for root route
+            index.js 
+                component for root path for a route
+            nested routes 
+                defined by file or folder & index.js for deeply nested routes 
+                /pages/about.js => /about 
+                /pages/about/index.js => /about
+            dynamic routes 
+                /pages/product/[id].js => /product/123
+                useRouter Hook (next/router)
+                    returns router obj 
+                    pathname property
+                        folder structure path 
+                    query property
+                        object with all dynamic values for that path 
+            nested dynamic routes 
+                /pages/[id]/overview => /123/overview
+            Catch-All route
+                /pages/blog/[...slug] => /blog/123/23/view 
+                slug value => ['123','23','view']
+        Data fetching 
+            getStaticProps() 
+                reserved function which returns an object
+                passed to component as props 
+                used to generate props dynamically  
+                executed when page is statically generated in build
+            Incremental static generation (ISR)
+                re-generate page on every request 
+                at most every X seconds
+                add revalidate: 10 property to return object of getStaticProps()
+            getStaticPaths() 
+                for generating dynamic pages
+                statically pre-render all the paths specified
+            getServerSideProps()
+                runs for every request 
+                access to params, req, res objects
 */
